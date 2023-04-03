@@ -26,6 +26,7 @@ class AppImages {
   static const String logoTransparent = '$rootUri/logo_transparent.png';
   static const String logo = '$rootUri/logo.png';
   static const String defaultProfile = '$rootUri/default_profile.png';
+  static const String placeholder = '$rootUri/placeholder.jpg';
 }
 
 class Boxes {
@@ -79,3 +80,4 @@ class Urls {
   ///Location Urls
   static const String LOCATION_AUTOCOMPLETE ='$LOCATION_BASE_API/autocomplete.php';
 }
+const String locationKey = 'pk.0b821f869258d4129c196400ab4927f0';

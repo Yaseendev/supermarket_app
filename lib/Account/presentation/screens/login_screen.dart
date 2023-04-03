@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:supermarket_app/Account/blocs/account_bloc/account_bloc.dart';
+import 'package:supermarket_app/Primary/presentation/screens/primary_screen.dart';
 import 'package:supermarket_app/Utils/constants.dart';
 import '../widgets/account_button.dart';
 import 'signup_screen.dart';
@@ -311,23 +312,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(height: 20),
                             TextButton(
                               onPressed: () {
-                                // Navigator.of(context)
-                                //     .pushReplacement(MaterialPageRoute(
-                                //         settings: RouteSettings(name: '/primary'),
-                                //         builder: (_) => MultiBlocProvider(
-                                //               providers: [
-                                //                 BlocProvider<
-                                //                     CategoriesBloc>(
-                                //                   create: (context) =>
-                                //                       CategoriesBloc(),
-                                //                 ),
-                                //                 BlocProvider<SearchBloc>(
-                                //                   create: (context) =>
-                                //                       SearchBloc(),
-                                //                 ),
-                                //               ],
-                                //               child: PrimaryScreen(),
-                                //             )));
+                                                // BlocProvider<
+                                                //     CategoriesBloc>(
+                                                //   create: (context) =>
+                                                //       CategoriesBloc(),
+                                                // ),
+                                                // BlocProvider<SearchBloc>(
+                                                //   create: (context) =>
+                                                //       SearchBloc(),
+                                                //),
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        settings:
+                                            RouteSettings(name: '/primary'),
+                                        builder: (_) => PrimaryScreen()));
                               },
                               child: Text('Continue as a visitor'),
                               style: TextButton.styleFrom(

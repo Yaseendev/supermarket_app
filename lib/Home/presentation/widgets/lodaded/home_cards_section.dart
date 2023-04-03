@@ -12,6 +12,7 @@ class HomeCardsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           HomeCard(
