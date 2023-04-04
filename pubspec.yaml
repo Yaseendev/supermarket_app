@@ -30,6 +30,7 @@ dependencies:
   shimmer: ^2.0.0
   flutter_typeahead: ^4.3.6
   google_maps_flutter: ^2.2.5
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

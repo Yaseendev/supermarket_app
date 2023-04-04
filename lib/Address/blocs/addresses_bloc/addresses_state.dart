@@ -10,6 +10,7 @@ abstract class AddressesState extends Equatable {
 class AddressesInitial extends AddressesState {}
 
 class AddressesLoading extends AddressesState {}
+class AddressesNoInternet extends AddressesState {}
 
 class AddressesFetched extends AddressesState {
   final List<Address> addresses;

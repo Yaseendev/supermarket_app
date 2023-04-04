@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supermarket_app/Home/blocs/categories_bloc/categories_bloc.dart';
 
+import '../loading/category_loading_card.dart';
 import 'category_card.dart';
 
 class CategoriesView extends StatelessWidget {
@@ -9,18 +12,23 @@ class CategoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Wrap(
-        spacing: 30,
-        runSpacing: 18,
-        children: [
-          CategoryCard(),
-          CategoryCard(),
-          CategoryCard(),
-          CategoryCard(),
-        ],
-      ),
+    return BlocBuilder<CategoriesBloc, CategoriesState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: state is CategoriesLoaded
+              ? Wrap(
+                  spacing: 25,
+                  runSpacing: 4,
+                  children: state.categories
+                      .map((cat) => CategoryCard(
+                            category: cat,
+                          ))
+                      .toList(),
+                )
+              : CategoryLoadingCard(),
+        );
+      },
     );
   }
 }

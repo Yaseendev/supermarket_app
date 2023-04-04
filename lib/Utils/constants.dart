@@ -27,6 +27,7 @@ class AppImages {
   static const String logo = '$rootUri/logo.png';
   static const String defaultProfile = '$rootUri/default_profile.png';
   static const String placeholder = '$rootUri/placeholder.jpg';
+  static const String placeholder2 = '$rootUri/placeholder_thumb.jpg';
 }
 
 class Boxes {
@@ -78,6 +79,7 @@ class Urls {
   static const String CHECKOUT = '/checkout';
   
   ///Location Urls
-  static const String LOCATION_AUTOCOMPLETE ='$LOCATION_BASE_API/autocomplete.php';
+  static const String LOCATION_AUTOCOMPLETE ='/autocomplete.php';
+  static const String LOCATION_REVERSE = '/reverse.php';
 }
 const String locationKey = 'pk.0b821f869258d4129c196400ab4927f0';

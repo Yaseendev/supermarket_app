@@ -10,7 +10,7 @@ part 'addresses_event.dart';
 part 'addresses_state.dart';
 
 class AddressesBloc extends Bloc<AddressesEvent, AddressesState> {
-  AddressesBloc() : super(AddressInitial()) {
+  AddressesBloc() : super(AddressesInitial()) {
     final Connectivity connectivity = locator.get<Connectivity>();
     final AddressRepository _addressRepository =
         locator.get<AddressRepository>();
@@ -38,7 +38,7 @@ class AddressesBloc extends Bloc<AddressesEvent, AddressesState> {
           emit(AddressesError(error.toString()));
         });
       } else {
-        emit(AddressNoInternet());
+        emit(AddressesNoInternet());
       }
     });
 

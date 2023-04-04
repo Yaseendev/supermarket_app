@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:supermarket_app/Home/blocs/categories_bloc/categories_bloc.dart';
+import 'package:supermarket_app/Home/blocs/deal_bloc/deal_bloc.dart';
 import 'package:supermarket_app/Product/data/models/product.dart';
 import 'package:supermarket_app/Search/data/repositories/search_repo.dart';
 import 'package:supermarket_app/Utils/constants.dart';
@@ -11,7 +12,9 @@ import '../widgets/loading/home_loading_view.dart';
 import '../widgets/lodaded/banner_view.dart';
 import '../widgets/lodaded/categories_view.dart';
 import '../widgets/lodaded/deal_of_day_section.dart';
+import '../widgets/lodaded/delivery_address_box.dart';
 import '../widgets/lodaded/home_cards_section.dart';
+import '../widgets/lodaded/most_popular_section.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -105,22 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(45),
-          child: ListTile(
-            horizontalTitleGap: 0,
-            //contentPadding: ,
-            leading: const Icon(
-              Icons.location_on_outlined,
-              size: 30,
-            ),
-            title: Text(
-              'Deliver To:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            trailing: TextButton(
-              child: Text('Change'),
-              onPressed: () {},
-            ),
-          ),
+          child: DeliveryAddressBox(),
         ),
       ),
       body: MultiBlocListener(
@@ -128,21 +116,33 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocListener<CategoriesBloc, CategoriesState>(
             listener: (context, state) {
               if (state is CategoriesLoading) {
+                if(!isHomeLoading)
                 setState(() {
                   isHomeLoading = true;
                 });
               } else {
+                if(isHomeLoading)
                 setState(() {
                   isHomeLoading = false;
                 });
               }
             },
           ),
-          // BlocListener<SubjectBloc, SubjectState>(
-          //   listener: (context, state) {
-          //     // TODO: implement listener
-          //   },
-          // ),
+          BlocListener<DealBloc, DealState>(
+            listener: (context, state) {
+              if (state is DealLoading) {
+                if(!isHomeLoading)
+                setState(() {
+                  isHomeLoading = true;
+                });
+              } else {
+                if(isHomeLoading)
+                setState(() {
+                  isHomeLoading = false;
+                });
+              }
+            },
+          ),
         ],
         child: RefreshIndicator(
           onRefresh: () {
@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (!isHomeLoading) DealOfTheDaySection(),
 
               ///Most Popular Section
-              //if(!isHomeLoading) MostPopularSection(),
+              if(!isHomeLoading) MostPopularSection(),
 
               ///Top Rated Section
               //if(!isHomeLoading) TopRatedSection(),

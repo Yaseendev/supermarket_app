@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supermarket_app/Product/data/models/product.dart';
-import 'package:supermarket_app/Shared/models/network_failure.dart';
+import 'package:supermarket_app/Shared/data/models/network_failure.dart';
 import '../providers/search_database_provider.dart';
 import '../providers/search_network_provider.dart';
 

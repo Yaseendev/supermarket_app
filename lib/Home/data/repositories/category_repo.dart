@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:supermarket_app/Product/data/models/product.dart';
-import 'package:supermarket_app/Shared/models/network_failure.dart';
+import 'package:supermarket_app/Shared/data/models/network_failure.dart';
 import '../models/category.dart';
 import '../providers/category_network_provider.dart';
 

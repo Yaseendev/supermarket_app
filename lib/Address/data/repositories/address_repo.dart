@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:supermarket_app/Account/data/providers/account_db_provider.dart';
-import 'package:supermarket_app/Shared/models/network_failure.dart';
+import 'package:supermarket_app/Shared/data/models/network_failure.dart';
 import '../models/address.dart';
 import '../models/location_result.dart';
 import '../provider/address_network_provider.dart';
@@ -14,15 +14,15 @@ class AddressRepository {
       {required AddressNetworkProvider apiService,
       required AccountDatabaseProvider accountDatabaseService}) {
     this._apiService = apiService;
-    
+
     this._accountDatabaseService = accountDatabaseService;
-    
   }
 
   Future<Either<Failure, List<Address>>> fetchAddresses() async {
     try {
       final token = await _accountDatabaseService.getToken();
-      final result = await _apiService.getAddresses(token ?? '');
+      if (token == null) return Right([]);
+      final result = await _apiService.getAddresses(token);
       final addresses =
           result.map((address) => Address.fromMap(address)).toList();
       return Right(addresses);
@@ -49,7 +49,9 @@ class AddressRepository {
               street: street,
               blockNumber: block,
               floorNumber: floor,
-              phone: phone));
+              phone: phone,
+
+              ));
       final address = Address.fromMap(result);
       return Right(address);
     } catch (e) {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supermarket_app/Address/blocs/addresses_bloc/addresses_bloc.dart';
 import 'package:supermarket_app/Home/blocs/categories_bloc/categories_bloc.dart';
+import 'package:supermarket_app/Home/blocs/deal_bloc/deal_bloc.dart';
+import 'package:supermarket_app/Home/blocs/popular_bloc/popular_bloc.dart';
 import 'package:supermarket_app/Home/presentation/screens/home_screen.dart';
 import '../widgets/app_nav_bar.dart';
 
@@ -19,20 +22,33 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
   @override
   void initState() {
     screens = [
-    BlocProvider<CategoriesBloc>(
-      create: (context) => categoriesBloc,
-      child: HomeScreen(),
-    ),
-    Center(
-      child: Text('2'),
-    ),
-    Center(
-      child: Text('3'),
-    ),
-    Center(
-      child: Text('4'),
-    ),
-  ];
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<CategoriesBloc>(
+            create: (context) => categoriesBloc,
+          ),
+          BlocProvider<AddressesBloc>(
+            create: (context) => AddressesBloc()..add(GetAllAddresses()),
+          ),
+          BlocProvider<DealBloc>(
+            create: (context) => DealBloc()..add(FetchDeal()),
+          ),
+          BlocProvider<PopularBloc>(
+            create: (context) => PopularBloc()..add(LoadMostPopular()),
+          ),
+        ],
+        child: HomeScreen(),
+      ),
+      Center(
+        child: Text('2'),
+      ),
+      Center(
+        child: Text('3'),
+      ),
+      Center(
+        child: Text('4'),
+      ),
+    ];
     super.initState();
   }
 
