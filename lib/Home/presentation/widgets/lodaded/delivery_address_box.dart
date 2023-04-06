@@ -29,11 +29,7 @@ class DeliveryAddressBox extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 state.selectedAddress == null
-                    ? BlocProvider<LocationBloc>(
-                        create: (context) =>
-                            LocationBloc()..add(DetectCurrentLocation()),
-                        child: CurrentLocationText(),
-                      )
+                    ? CurrentLocationText()
                     : Text(state.selectedAddress!.city),
               ],
             ),

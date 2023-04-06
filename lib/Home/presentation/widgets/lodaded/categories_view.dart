@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supermarket_app/Home/blocs/categories_bloc/categories_bloc.dart';
 
+import '../loading/categories_laoding_view.dart';
 import '../loading/category_loading_card.dart';
 import 'category_card.dart';
 
@@ -26,7 +27,7 @@ class CategoriesView extends StatelessWidget {
                           ))
                       .toList(),
                 )
-              : CategoryLoadingCard(),
+              : CategoriesLoadingView(),
         );
       },
     );
