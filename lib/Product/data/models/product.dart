@@ -1,13 +1,23 @@
 import 'dart:convert';
 
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'product.g.dart';
+
+@HiveType(typeId: 3)
 class Product {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final num price;
   final List<String> images;
+  @HiveField(3)
   final bool isOnSale;
   final num? salePercentage;
   final num? salePrice;
+  @HiveField(4)
   final num regularPrice;
   final String desc;
   final bool isFav;
@@ -62,7 +72,7 @@ class Product {
       if (salePrice != null) 'sale_price': salePrice,
       'regularPrice': regularPrice,
       'desc': desc,
-      'wishlist' : isFav,
+      'wishlist': isFav,
     };
   }
 

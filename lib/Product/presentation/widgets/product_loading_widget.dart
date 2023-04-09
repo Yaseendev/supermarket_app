@@ -13,7 +13,7 @@ class ProductLoadingWidget extends StatelessWidget {
       child: GridView.count(
         padding: const EdgeInsets.all(12),
         crossAxisCount: 2,
-        children: List.filled(6, ProductLoadingCard()),
+        children: List.filled(8, ProductLoadingCard()),
       ), 
     );
   }

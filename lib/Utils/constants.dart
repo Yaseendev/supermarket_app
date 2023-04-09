@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:supermarket_app/Cart/data/models/cart_item.dart';
 import '../Account/data/models/user.dart';
 
 class AppColors {
@@ -28,6 +29,7 @@ class AppImages {
   static const String defaultProfile = '$rootUri/default_profile.png';
   static const String placeholder = '$rootUri/placeholder.jpg';
   static const String placeholder2 = '$rootUri/placeholder_thumb.jpg';
+  static const String emptyCart = '$rootUri/empty-cart.svg';
 }
 
 class Boxes {
@@ -43,6 +45,12 @@ class Boxes {
       return Hive.box<String>('searchHistory');
     else
       return await Hive.openBox<String>('searchHistory');
+  }
+  static Future<Box<CartItem>> getCartBox() async {
+    if (Hive.isBoxOpen('Cart'))
+      return Hive.box<CartItem>('Cart');
+    else
+      return await Hive.openBox<CartItem>('Cart');
   }
 }
 

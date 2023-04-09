@@ -5,6 +5,9 @@ import 'package:supermarket_app/Account/data/providers/account_network_provider.
 import 'package:supermarket_app/Account/data/repositories/account_repo.dart';
 import 'package:supermarket_app/Address/data/provider/address_network_provider.dart';
 import 'package:supermarket_app/Address/data/repositories/address_repo.dart';
+import 'package:supermarket_app/Cart/data/providers/cart_db_provider.dart';
+import 'package:supermarket_app/Cart/data/providers/cart_network_provider.dart';
+import 'package:supermarket_app/Cart/data/repositories/cart_repository.dart';
 import 'package:supermarket_app/Home/data/providers/category_network_provider.dart';
 import 'package:supermarket_app/Home/data/providers/home_network_provider.dart';
 import 'package:supermarket_app/Home/data/repositories/category_repo.dart';
@@ -14,6 +17,8 @@ import 'package:supermarket_app/Search/data/providers/search_network_provider.da
 import 'package:supermarket_app/Search/data/repositories/search_repo.dart';
 import 'package:supermarket_app/Shared/data/providers/location_network_provider.dart';
 import 'package:supermarket_app/Shared/data/repositories/location_repository.dart';
+import 'package:supermarket_app/Wishlist/data/providers/wishlist_network_provider.dart';
+import 'package:supermarket_app/Wishlist/data/repositories/wishlist_repo.dart';
 import 'database_service.dart';
 import 'location_service.dart';
 
@@ -43,9 +48,13 @@ Future locatorsSetup() async {
       () => CategoryNetworkProvider());
   locator.registerLazySingleton<CategoryRepository>(
       () => CategoryRepository(locator.get<CategoryNetworkProvider>()));
-//   locator.registerLazySingleton<CartNetworkProvider>(() => CartNetworkProvider());
-//   locator.registerLazySingleton<CartDatabaseProvider>(() => CartDatabaseProvider(database.secureStorage));
-//   locator.registerLazySingleton<CartRepository>(() => CartRepository());
+ locator.registerLazySingleton<CartNetworkProvider>(() => CartNetworkProvider());
+   locator.registerLazySingleton<CartDatabaseProvider>(() => CartDatabaseProvider(database.secureStorage));
+   locator.registerLazySingleton<CartRepository>(() => CartRepository(
+    apiService: locator.get<CartNetworkProvider>(),
+    databaseService: locator.get<CartDatabaseProvider>(),
+    accountDatabaseService: locator.get<AccountDatabaseProvider>(),
+   ));
   locator.registerLazySingleton<AddressNetworkProvider>(
       () => AddressNetworkProvider());
   locator.registerLazySingleton<AddressRepository>(() => AddressRepository(
@@ -58,12 +67,14 @@ Future locatorsSetup() async {
         apiService: locator.get<LocationApiService>(),
         locationService: locator.get<LocationService>(),
       ));
-
-//   locator.registerLazySingleton<WishlistNetworkProvider>(() => WishlistNetworkProvider());
-//   locator.registerLazySingleton<WishlistRepository>(() => WishlistRepository());
-  locator
-      .registerLazySingleton<HomeNetworkProvider>(() => HomeNetworkProvider());
+  locator.registerLazySingleton<HomeNetworkProvider>(() => HomeNetworkProvider());
   locator.registerLazySingleton<HomeRepository>(() => HomeRepository(
         locator.get<HomeNetworkProvider>(),
       ));
+  locator.registerLazySingleton<WishlistNetworkProvider>(() => WishlistNetworkProvider());
+  locator.registerLazySingleton<WishlistRepository>(() => WishlistRepository(
+  locator.get<WishlistNetworkProvider>(),
+  locator.get<AccountDatabaseProvider>()
+  ));
+
 }

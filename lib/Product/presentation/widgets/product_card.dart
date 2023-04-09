@@ -5,6 +5,8 @@ import 'package:supermarket_app/Product/data/models/product.dart';
 import 'package:supermarket_app/Product/product_bloc/product_bloc.dart';
 import 'package:supermarket_app/Utils/constants.dart';
 
+import '../screens/product_details_screen.dart';
+
 class ProductCard extends StatelessWidget {
   final Product product;
   const ProductCard({
@@ -15,13 +17,13 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (_) => BlocProvider<ProductBloc>(
-      //           create: (context) => ProductBloc(product),
-      //           child: ProductDetailsScreen(
-      //             product: product,
-      //           ),
-      //         ))),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => BlocProvider<ProductBloc>(
+                create: (context) => ProductBloc(product),
+                child: ProductDetailsScreen(
+                  product: product,
+                ),
+              ))),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

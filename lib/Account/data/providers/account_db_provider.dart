@@ -1,6 +1,5 @@
 import 'package:supermarket_app/Utils/constants.dart';
 import 'package:supermarket_app/Utils/services/database_service.dart';
-
 import '../models/user.dart';
 
 class AccountDatabaseProvider extends DatabaseService {

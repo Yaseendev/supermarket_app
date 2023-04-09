@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supermarket_app/Primary/presentation/screens/primary_screen.dart';
 import 'Account/blocs/account_bloc/account_bloc.dart';
+import 'Cart/blocs/cart_bloc/cart_bloc.dart';
 import 'Splash/blocs/init_bloc/initroute_bloc.dart';
 import 'Splash/presentation/screens/splash_screen.dart';
 import 'Utils/constants.dart';
 import 'Utils/services/service_locator.dart';
+import 'Wishlist/bloc/wishlist_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,12 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<InitrouteBloc>(
             create: (context) => InitrouteBloc()..add(UserCheckEvent()),
+          ),
+          BlocProvider<CartBloc>(
+            create: (context) => CartBloc(),
+          ),
+          BlocProvider<WishlistBloc>(
+            create: (context) => WishlistBloc(),
           ),
       ],
       child: MaterialApp(
