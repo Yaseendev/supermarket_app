@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:supermarket_app/Account/data/providers/account_db_provider.dart';
+import 'package:supermarket_app/Product/data/models/product.dart';
 import 'package:supermarket_app/Shared/data/models/network_failure.dart';
 import '../models/cart.dart';
 import '../models/cart_item.dart';
@@ -26,12 +27,34 @@ class CartRepository {
       final token = await _accountDatabaseService.getToken();
       if (token == null) {
         final List<CartItem> cartContent = await _databaseService.fetchCart();
+
+        try {
+          final productsResult = await _apiService
+              .getCartProducts(cartContent.map((e) => e.product.id).toList());
+          final products =
+              productsResult.map((pr) => Product.fromMap(pr)).toList();
+          cartContent.replaceRange(
+              0,
+              cartContent.length,
+              cartContent.map((e) => e.copyWith(
+                  product: products
+                      .firstWhere((element) => element.id == e.product.id))));
+        } catch (e) {
+          print('Cannot get cart products');
+        }
+
         final total = cartContent.fold(
             0.0,
             (previousValue, element) =>
                 previousValue + (element.product.price * element.quantity));
+
+        return Right(Cart(
+          cartContent: cartContent,
+          total: total,
+          subtotal: total,
+        ));
       }
-      final result = await _apiService.getCart(token!);
+      final result = await _apiService.getCart(token);
       final cart = Cart.fromMap(result);
       return Right(cart);
     } catch (e) {
@@ -42,7 +65,21 @@ class CartRepository {
   Future<Either<Failure, Cart>> addToCart(CartItem item) async {
     try {
       final token = await _accountDatabaseService.getToken();
-      final result = await _apiService.addCart(token ?? '', item);
+      if (token == null) {
+        await _databaseService.addToCart(item);
+        final List<CartItem> cartContent = await _databaseService.fetchCart();
+
+        final total = cartContent.fold(
+            0.0,
+            (previousValue, element) =>
+                previousValue + (element.product.price * element.quantity));
+        return Right(Cart(
+          cartContent: cartContent,
+          total: total,
+          subtotal: total,
+        ));
+      }
+      final result = await _apiService.addCart(token, item);
       final cart = Cart.fromMap(result);
       return Right(cart);
     } catch (e) {
@@ -72,10 +109,37 @@ class CartRepository {
     }
   }
 
-  Future<Either<Failure, Cart>> removeFromCart(String id) async {
+  Future<Either<Failure, Cart>> removeFromCart(CartItem item) async {
     try {
       final token = await _accountDatabaseService.getToken();
-      final result = await _apiService.removeFromCart(token ?? '', id);
+      if (token == null) {
+        await _databaseService.removeFromCart(item);
+        final List<CartItem> cartContent = await _databaseService.fetchCart();
+        try {
+          final productsResult = await _apiService
+              .getCartProducts(cartContent.map((e) => e.product.id).toList());
+          final products =
+              productsResult.map((pr) => Product.fromMap(pr)).toList();
+          cartContent.replaceRange(
+              0,
+              cartContent.length,
+              cartContent.map((e) => e.copyWith(
+                  product: products
+                      .firstWhere((element) => element.id == e.product.id))));
+        } catch (e) {
+          print('Cannot get cart products');
+        }
+        final total = cartContent.fold(
+            0.0,
+            (previousValue, element) =>
+                previousValue + (element.product.price * element.quantity));
+        return Right(Cart(
+          cartContent: cartContent,
+          total: total,
+          subtotal: total,
+        ));
+      }
+      final result = await _apiService.removeFromCart(token, item.id ?? '');
       final cart = Cart.fromMap(result);
       return Right(cart);
     } catch (e) {

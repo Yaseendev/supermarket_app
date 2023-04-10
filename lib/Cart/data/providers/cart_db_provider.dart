@@ -4,23 +4,27 @@ import 'package:supermarket_app/Utils/constants.dart';
 import 'package:supermarket_app/Utils/services/database_service.dart';
 
 class CartDatabaseProvider extends DatabaseService {
-  late final Box<CartItem>? _cartBox;
+  Box<CartItem>? _cartBox;
   CartDatabaseProvider(super.secureStorage) : super();
 
   Future<void> addToCart(CartItem item) async {
     if (_cartBox == null) _cartBox = await Boxes.getCartBox();
-    if (_cartBox!.containsKey(item.product.id)) {
+    final insertedItem = _cartBox!.values.firstWhere(
+      (element) => element.product.id == item.product.id,
+      orElse: () => item,
+    );
+    if (insertedItem.id != null) {
       await _cartBox!
-          .putAt(int.parse(item.id!), item.copyWith(qty: item.quantity + 1));
+          .put(int.parse(insertedItem.id!), item.copyWith(qty: insertedItem.quantity + item.quantity));
     } else {
       final index = await _cartBox!.add(item);
-      await _cartBox!.putAt(index, item.copyWith(id: index.toString()));
+      await _cartBox!.put(index, item.copyWith(id: index.toString()));
     }
   }
 
   Future<void> removeFromCart(CartItem item) async {
     if (_cartBox == null) _cartBox = await Boxes.getCartBox();
-    await _cartBox!.deleteAt(int.parse(item.id!));
+    await _cartBox!.delete(int.parse(item.id!));
   }
 
   Future<void> increaseQuantity(CartItem item) async {
@@ -38,9 +42,9 @@ class CartDatabaseProvider extends DatabaseService {
         .putAt(int.parse(item.id!), item.copyWith(qty: item.quantity - 1));
   }
 
-    Future<List<CartItem>> fetchCart() async {
+  Future<List<CartItem>> fetchCart() async {
     if (_cartBox == null) _cartBox = await Boxes.getCartBox();
 
-     return _cartBox!.values.toList();
+    return _cartBox!.values.toList();
   }
 }

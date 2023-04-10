@@ -22,12 +22,12 @@ class AddItem extends CartEvent {
 }
 
 class RemoveItem extends CartEvent {
-  final String itemId;
+  final CartItem item;
 
-  RemoveItem(this.itemId);
+  RemoveItem(this.item);
 
   @override
-  List<Object> get props => [itemId];
+  List<Object> get props => [item];
 }
 
 class CartRemoveCoupon extends CartEvent {

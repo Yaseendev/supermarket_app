@@ -118,6 +118,16 @@ class CartNetworkProvider extends ApiService {
     return response.data;
   }
 
+  Future<List<dynamic>> getCartProducts(List<int> products) async {
+    final Response response = await dio.get(
+      Urls.GET_PRODUCTS,
+      queryParameters: {
+        'ids' : products.join(','),
+      }
+    );
+    return response.data;
+  }
+
   @override
   String getErrorMsg(Object error) {
     if (error is Exception) {

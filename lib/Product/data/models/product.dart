@@ -12,12 +12,15 @@ class Product {
   final String name;
   @HiveField(2)
   final num price;
-  final List<String> images;
   @HiveField(3)
-  final bool isOnSale;
-  final num? salePercentage;
-  final num? salePrice;
+  final List<String> images;
   @HiveField(4)
+  final bool isOnSale;
+  @HiveField(5)
+  final num? salePercentage;
+  @HiveField(6)
+  final num? salePrice;
+  @HiveField(7)
   final num regularPrice;
   final String desc;
   final bool isFav;

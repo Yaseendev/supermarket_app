@@ -51,12 +51,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     on<RemoveItem>((event, emit) async {
       if (await connectivity.checkConnectivity() != ConnectivityResult.none) {
-        final tempList = cart!.cartContent;
-        tempList.removeWhere((element) => element.id == event.itemId);
-        cart = cart!.copyWith(cartContent: tempList);
-        emit(CartLoaded(cart!));
         emit(CartLoading());
-        await _cartRepo.removeFromCart(event.itemId).then((res) {
+        // final tempList = cart!.cartContent;
+        // tempList.removeWhere((element) => element.id == event.itemId);
+        // cart = cart!.copyWith(cartContent: tempList);
+        // emit(CartLoaded(cart!));
+        await _cartRepo.removeFromCart(event.item).then((res) {
           res.fold((left) => emit(CartError(left.message)), (right) {
             emit(CartLoaded(right));
           });

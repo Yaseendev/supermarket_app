@@ -46,6 +46,7 @@ class Boxes {
     else
       return await Hive.openBox<String>('searchHistory');
   }
+
   static Future<Box<CartItem>> getCartBox() async {
     if (Hive.isBoxOpen('Cart'))
       return Hive.box<CartItem>('Cart');
@@ -65,6 +66,7 @@ class Urls {
   static const String CART_PATH = '/cart';
   static const String ADDRESS_PATH = '/address';
   static const String WISHLIST_PATH = '/wishlist';
+  static const String PRODUCT_PATH = '/products';
   static const String SIGNUP_API = '$AUTH_PATH/register';
   static const String SIGNIN_API = '$AUTH_PATH/login';
   static const String FORGOTPASS_API = '$AUTH_PATH/forgot_password';
@@ -85,9 +87,11 @@ class Urls {
   static const String ADD_WISHLIST = '$WISHLIST_PATH/add';
   static const String REMOVE_WISHLIST = '$WISHLIST_PATH/remove';
   static const String CHECKOUT = '/checkout';
-  
+  static const String GET_PRODUCTS = '$PRODUCT_PATH/byid';
+
   ///Location Urls
-  static const String LOCATION_AUTOCOMPLETE ='/autocomplete.php';
+  static const String LOCATION_AUTOCOMPLETE = '/autocomplete.php';
   static const String LOCATION_REVERSE = '/reverse.php';
 }
+
 const String locationKey = 'pk.0b821f869258d4129c196400ab4927f0';
