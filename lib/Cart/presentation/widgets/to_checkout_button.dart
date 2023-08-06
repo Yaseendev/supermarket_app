@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:supermarket_app/Cart/blocs/cart_bloc/cart_bloc.dart';
 import 'package:supermarket_app/Cart/data/models/cart.dart';
+import 'package:supermarket_app/Utils/constants.dart';
 import '../screens/checkout_screen.dart';
 
 class ToCheckoutButton extends StatelessWidget {
@@ -24,9 +26,17 @@ class ToCheckoutButton extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(12),
             ),
-            onPressed: state is CartLoading
+            onPressed: state is CartContentLoading
                 ? null
                 : () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) => SpinKitFadingCube(
+                        color: AppColors.PRIMARY_COLOR,
+                        size: 58,
+                      ),
+                    );
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (_) => BlocProvider<CheckoutBloc>(
                     //           create: (context) => CheckoutBloc(),

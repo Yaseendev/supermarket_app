@@ -39,7 +39,9 @@ class _CartItemCardState extends State<CartItemCard> {
             borderRadius: BorderRadius.circular(10),
             child: CachedNetworkImage(
               fit: BoxFit.fill,
-              imageUrl: widget.product.product.images.isNotEmpty ? widget.product.product.images.first : '',
+              imageUrl: widget.product.product.images.isNotEmpty
+                  ? widget.product.product.images.first
+                  : '',
               width: 100,
               height: 90,
               placeholder: (context, url) => Image.asset(
@@ -94,7 +96,9 @@ class _CartItemCardState extends State<CartItemCard> {
                                       widget.product.copyWith(qty: quantity)));
                                 }
                               },
-                              icon: Icon(Icons.remove),
+                              icon: Icon(quantity <= 1
+                                  ? Icons.delete_forever_rounded
+                                  : Icons.remove),
                               alignment: Alignment.center,
                               iconSize: 18,
                               padding: EdgeInsets.zero,

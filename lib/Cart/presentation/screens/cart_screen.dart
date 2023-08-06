@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
-      buildWhen: (previous, current) => current is! CartError,
+      buildWhen: (previous, current) => current is! CartError && current is! CartContentLoading,
       builder: (context, state) {
         if(state is CartLoaded && state.cart.cartContent.isNotEmpty){
           return CartLoadedView(

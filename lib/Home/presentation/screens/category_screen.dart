@@ -86,20 +86,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ..add(LoadCategory(categoryId: widget.category.id));
               return cBloc.stream.firstWhere((e) => e is CategoryLoaded);
             },
-            child: state is CategoryLoaded
-                ? state.products.isEmpty
-                    ? Center(
-                        child: Text(
-                          state.searchTerm != null
-                              ? state.searchTerm!.isNotEmpty
-                                  ? 'No result found'
-                                  : 'There is no ${widget.category.name} products yet'
-                              : 'There is no ${widget.category.name} products yet',
-                          style: TextStyle(
-                            fontSize: 16,
+              child: state is CategoryLoaded
+                  ? state.products.isEmpty
+                      ? Center(
+                          child: Text(
+                            state.searchTerm != null
+                                ? state.searchTerm!.isNotEmpty
+                                    ? 'No result found'
+                                    : 'There is no ${widget.category.name} products yet'
+                                : 'There is no ${widget.category.name} products yet',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                      )
+                        )
                     : GridView.builder(
                         padding: const EdgeInsets.all(12),
                         itemCount: state.products.length,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
 import 'category_home_loading_card.dart';
 
 class CategoriesLoadingView extends StatelessWidget {

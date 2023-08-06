@@ -8,6 +8,7 @@ Future<void> setToken(String token) async => await secureStorage.write(
         key: 'token',
         value: token,
       );
+      
   Future<String?> getToken() async {
     return await secureStorage.read(key: 'token');
   }

@@ -13,6 +13,7 @@ class CartLoading extends CartState {}
 
 class CartNoInternet extends CartState {}
 
+class CartContentLoading extends CartState {}
 class CartError extends CartState {
   final String? msg;
 
